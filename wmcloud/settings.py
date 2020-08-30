@@ -89,3 +89,9 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 ROOT_PATH = "D:/data/"
+
+DB_SERVER_NAME = "119.8.103.176" #
+DB_SERVER_USER_NAME = "root"
+DB_SERVER_PASSWORD = "password"
+DB_NAME = "stock"
+

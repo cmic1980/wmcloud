@@ -10,7 +10,7 @@ from itemadapter import ItemAdapter
 import json
 import wmcloud.settings as settings;
 import MySQLdb
-
+import wmcloud.settings as settings
 
 class JsonWriterPipeline:
     def __init__(self):
@@ -30,7 +30,7 @@ class JsonWriterPipeline:
 class MysqlWriterPipeline:
     def __init__(self):
         # 打开数据库连接
-        self.db = MySQLdb.connect("localhost", "root", "password", "stock", charset="utf8")
+        self.db = MySQLdb.connect(settings.DB_SERVER_NAME, settings.DB_SERVER_USER_NAME, settings.DB_SERVER_PASSWORD, settings.DB_NAME, charset="utf8")
         sql = "truncate ticker"
 
         # 使用cursor()方法获取操作游标
