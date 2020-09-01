@@ -8,7 +8,6 @@
 from itemadapter import ItemAdapter
 
 import json
-import wmcloud.settings as settings;
 import MySQLdb
 import wmcloud.settings as settings
 
