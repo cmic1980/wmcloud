@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 import json
 import wmcloud.settings as settings
-from itemadapter import ItemAdapter
+import pymysql
 
 class JsonWriterPipeline:
     def __init__(self):
@@ -23,3 +23,41 @@ class JsonWriterPipeline:
     def close_spider(self, spider):
         # 可选实现，当spider被关闭时，这个方法被调用
         self.file.close()
+
+class MysqlWriterPipeline:
+    def __init__(self):
+        # 打开数据库连接
+        self.db = pymysql.connect(host=settings.DB_SERVER_NAME, user=settings.DB_SERVER_USER_NAME,
+                                  password=settings.DB_SERVER_PASSWORD, db=settings.DB_NAME, charset="utf8")
+        sql = "truncate ticker"
+
+        # 使用cursor()方法获取操作游标
+        cursor = self.db.cursor()
+        # 执行sql语句
+        cursor.execute(sql)
+        # 提交到数据库执行
+        self.db.commit()
+
+    def process_item(self, item, spider):
+        # 使用cursor()方法获取操作游标
+        cursor = self.db.cursor()
+
+        # SQL 插入语句
+        sql = "INSERT INTO `stock`.`ticker` (`symbol`, `total`, `percent`, `quality`, `industry`, `institution`, " \
+              " `valuation`, `trend`, `quality_content`, `quality_tag`, `strategy_content`, `strategy_tag`) " \
+              " VALUES ('{}', {}, {}, {}, {}, {}, {}, {},'{}', '{}', '{}', '{}')"
+        sql = sql.format(item["symbol"], item["total"], item["percent"], item["quality"], item["industry"],
+                         item["institution"], item["valuation"], item["trend"], item["quality_content"],
+                         item["quality_tag"],
+                         item["strategy_content"], item["strategy_tag"])
+
+        # 执行sql语句
+        cursor.execute(sql)
+        # 提交到数据库执行
+        self.db.commit()
+
+        return item
+
+    def close_spider(self, spider):
+        # 关闭数据库连接
+        self.db.close()
