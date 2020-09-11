@@ -29,7 +29,7 @@ class MysqlWriterPipeline:
         # 打开数据库连接
         self.db = pymysql.connect(host=settings.DB_SERVER_NAME, user=settings.DB_SERVER_USER_NAME,
                                   password=settings.DB_SERVER_PASSWORD, db=settings.DB_NAME, charset="utf8")
-        sql = "truncate ticker"
+        sql = "truncate diagnosis"
 
         # 使用cursor()方法获取操作游标
         cursor = self.db.cursor()
@@ -43,7 +43,7 @@ class MysqlWriterPipeline:
         cursor = self.db.cursor()
 
         # SQL 插入语句
-        sql = "INSERT INTO `stock`.`ticker` (`symbol`, `total`, `percent`, `quality`, `industry`, `institution`, " \
+        sql = "INSERT INTO `stock`.`diagnosis` (`symbol`, `total`, `percent`, `quality`, `industry`, `institution`, " \
               " `valuation`, `trend`, `quality_content`, `quality_tag`, `strategy_content`, `strategy_tag`) " \
               " VALUES ('{}', {}, {}, {}, {}, {}, {}, {},'{}', '{}', '{}', '{}')"
         sql = sql.format(item["symbol"], item["total"], item["percent"], item["quality"], item["industry"],

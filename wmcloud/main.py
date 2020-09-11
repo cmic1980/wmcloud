@@ -7,3 +7,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 执行 scrapy 内置的函数方法 execute，  使用 crawl 爬取并调试，最后一个参数 jobbole 是我的爬虫文件名
 execute(['scrapy', 'crawl', 'sp_wmcloud'])
+
+
+
+
